@@ -107,7 +107,7 @@ def clean_news_data(news_df):
 
 
 def clean_codeup_data(codeup_df):
-     '''
+    '''
     This function takes in a dataframe and creates columns that contain cleaned, stemmed, and lemmatized data and returns a dataframe
     '''
     # rename content column to original
