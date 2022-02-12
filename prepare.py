@@ -26,8 +26,17 @@ def basic_clean(str):
     .decode('utf-8', 'ignore')
     # remove anything that is not a letter, number, single quote, or white space
     str = re.sub(r"[^a-z0-9'\s]", '', str)
-    
+
+    stopword_list = stopwords.words('english')
+
+    words = str.split()
+
+    filtered_words = [w for w in words if w not in stopword_list]
+
+    str = ' '.join(filtered_words)
+
     return str
+
 
 
 def tokenize(str):
@@ -120,3 +129,25 @@ def clean_codeup_data(codeup_df):
     codeup_df = codeup_df.assign(stemmed = codeup_df.clean.apply(stem), lemmatized = codeup_df.clean.apply(lemmatize))
 
     return codeup_df
+
+
+def prep_clean_codeup_data():
+    '''
+    This function pulls in the codeup blog articles dataframe, cleans and preps it, and returns a dataframe
+    '''
+    # use function to pull in dataframe
+    codeup_df = acquire.read_blog_articles(refresh = False)
+    codeup_df = clean_codeup_data(codeup_df)
+
+    return codeup_df
+
+
+def prep_clean_news_data():
+    '''
+    This function pulls in the news articles dataframe, cleans and preps it, and returns a dataframe
+    '''
+    # use function to pull in dataframe
+    news_df = acquire.read_news_articles(refresh = False)
+    news_df = clean_news_data(news_df)
+
+    return news_df
